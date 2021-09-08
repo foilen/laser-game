@@ -28,6 +28,6 @@ Get the version you want from https://deploy.foilen.com/laser-game/ .
 
 
 ```bash
-wget https://deploy.foilen.com/laser-game/laser-game_X.X.X_amd64.deb
-sudo dpkg -i laser-game_X.X.X_amd64.deb
+wget https://deploy.foilen.com/laser-game/laser-game_X.X.X_YYYYY.deb
+sudo dpkg -i laser-game_X.X.X_YYYYY.deb
 ```

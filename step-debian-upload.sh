@@ -18,18 +18,18 @@ else
     echo ----[ IPFS root $IPFS_ROOT is present ]----
     echo Current $DOMAIN_NAME resolves to
     echo $IPFS_CURRENT_PATH
-    echo Current root $IPFS_ROOT resulves to $IPFS_ROOT_DIR_PATH
+    echo Current root $IPFS_ROOT resolves to $IPFS_ROOT_DIR_PATH
     echo $IPFS_ROOT_DIR_PATH
 fi
 
-echo ----[ Add to IPFS ]----
-DEB_FILE=laser-game_${VERSION}_amd64.deb
-DEB_PATH=$RUN_PATH/build/debian_out/laser-game
-IPFS_FILE_ID=$(ipfs add -q $DEB_PATH/../$DEB_FILE | tail -n1)
-echo IPFS_FILE_ID: $IPFS_FILE_ID
+for DEB_FILE in $(ls build/debian/); do
+    echo ----[ Add to IPFS $DEB_FILE ]----
+    IPFS_FILE_ID=$(ipfs add -q $RUN_PATH/build/debian/$DEB_FILE | tail -n1)
+    echo IPFS_FILE_ID: $IPFS_FILE_ID
 
-echo ----[ Put to IPFS under $IPFS_ROOT/laser-game/$DEB_FILE ]----
-ipfs files cp /ipfs/$IPFS_FILE_ID $IPFS_ROOT/laser-game/$DEB_FILE
+    echo ----[ Put to IPFS under $IPFS_ROOT/laser-game/$DEB_FILE ]----
+    ipfs files cp /ipfs/$IPFS_FILE_ID $IPFS_ROOT/laser-game/$DEB_FILE
+done
 
 echo; echo
 echo ----[ New dnslink ]----
