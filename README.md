@@ -4,6 +4,25 @@ Create a laser labyrinth and use this application to monitor the end of the lase
 
 # Local Usage
 
+## Needed library
+
+```
+# Local build
+sudo apt install libasound2-dev
+
+# Cross build
+REL=$(lsb_release -sc)
+sudo dpkg --add-architecture armhf
+sudo add-apt-repository "deb [arch=armhf] http://ports.ubuntu.com/ ${REL} main universe multiverse restricted"
+sudo add-apt-repository "deb [arch=armhf] http://ports.ubuntu.com/ ${REL}-updates main universe multiverse restricted"
+sudo add-apt-repository "deb [arch=armhf] http://ports.ubuntu.com/ ${REL}-security main universe multiverse restricted"
+sudo add-apt-repository "deb [arch=armhf] http://ports.ubuntu.com/ ${REL}-restricted main universe multiverse restricted"
+sudo add-apt-repository "deb [arch=armhf] http://ports.ubuntu.com/ ${REL}-backports main universe multiverse restricted"
+sudo apt-get update
+sudo apt-get install crossbuild-essential-armhf gcc-arm-linux-gnueabi libasound2-dev:armhf
+
+```
+
 ## Compile
 
 `./create-local-release.sh`

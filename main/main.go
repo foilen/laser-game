@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
+	"sync"
 
 	"github.com/blackjack/webcam"
 )
@@ -34,38 +33,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for {
-		err = cam.WaitForFrame(1)
+	// Start the channel
+	diffEventChannel := make(chan bool, 100)
 
-		switch err.(type) {
-		case nil:
-		case *webcam.Timeout:
-			fmt.Fprint(os.Stderr, err.Error())
-			continue
-		default:
-			log.Fatal(err)
-		}
-
-		frame, err := cam.ReadFrame()
-		if err != nil {
-			log.Fatal(err)
-		}
-		if len(frame) != 0 {
-			// Process frame
-			length := len(frame) / 4
-			var count = 0
-			for i := 0; i < length; i++ {
-				ii := i * 4
-				if frame[ii] > 128 {
-					count++
-				}
-				if frame[ii+2] > 128 {
-					count++
-				}
-			}
-			percent := count * 100 / length / 2
-			log.Println("Count", count, "percent:", percent)
-		}
-	}
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go processVideo(cam, diffEventChannel)
+	go trigger(diffEventChannel)
+	wg.Wait()
 
 }
