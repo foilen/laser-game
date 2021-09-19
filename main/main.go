@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"sync"
 
@@ -12,6 +13,9 @@ const (
 )
 
 func main() {
+
+	triggerPercent := flag.Int("triggerPercent", 5, "The percentage of changes that will trigger the alarm")
+	flag.Parse()
 
 	log.Println("Open camera /dev/video0")
 	cam, err := webcam.Open("/dev/video0")
@@ -38,7 +42,7 @@ func main() {
 
 	var wg sync.WaitGroup
 	wg.Add(1)
-	go processVideo(cam, diffEventChannel)
+	go processVideo(cam, diffEventChannel, *triggerPercent)
 	go trigger(diffEventChannel)
 	wg.Wait()
 

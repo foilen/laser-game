@@ -27,12 +27,15 @@ sudo apt-get install crossbuild-essential-armhf gcc-arm-linux-gnueabi libasound2
 
 `./create-local-release.sh`
 
-The file is then in `build/bin/laser-game`
+The file is then in `build/amd64/bin/laser-game`
 
 ## Execute
 
 To execute:
-`./build/bin/laser-game`
+`./build/amd64/bin/laser-game`
+
+or with the percentage to use for triggering the alarm:
+`./build/amd64/bin/laser-game --triggerPercent 10`
 
 # Create release
 
