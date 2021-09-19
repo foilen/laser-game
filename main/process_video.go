@@ -8,7 +8,7 @@ import (
 	"github.com/blackjack/webcam"
 )
 
-func processVideo(cam *webcam.Webcam, diffEventChannel chan bool) {
+func processVideo(cam *webcam.Webcam, diffEventChannel chan int) {
 
 	var movingAverage = 0
 	for {
@@ -57,7 +57,7 @@ func processVideo(cam *webcam.Webcam, diffEventChannel chan bool) {
 			diffPercent := diff * 100 / movingAverage
 
 			if diffPercent >= 5 {
-				diffEventChannel <- true
+				diffEventChannel <- diffPercent
 			}
 
 		}

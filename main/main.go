@@ -34,7 +34,7 @@ func main() {
 	}
 
 	// Start the channel
-	diffEventChannel := make(chan bool, 100)
+	diffEventChannel := make(chan int, 100)
 
 	var wg sync.WaitGroup
 	wg.Add(1)

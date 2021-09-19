@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/oto/v2"
 )
 
-func trigger(diffEventChannel chan bool) {
+func trigger(diffEventChannel chan int) {
 
 	// Prepare audio
 	otoContext, ready, err := oto.NewContext(44100, 1, 1)
@@ -27,9 +27,9 @@ func trigger(diffEventChannel chan bool) {
 
 	// wait for events
 	for {
-		<-diffEventChannel
+		diffPercent := <-diffEventChannel
 
-		log.Println("TRIGGERED")
+		log.Println("TRIGGERED with", diffPercent, "%")
 
 		// Make a sound
 		p := otoContext.NewPlayer(bytes.NewReader(sample))
